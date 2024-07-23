@@ -1,5 +1,4 @@
 abstract class Pen {
-
     public String refil;
     public String tube;
 
@@ -9,10 +8,8 @@ abstract class Pen {
     }
 
     abstract public String getRefil();
-    // abstract public void setRefil(String refil);
 
     abstract public String getTube();
-    // abstract public void setTume(String tube);
 
     public void write() {
         System.out.println("these pen can write");
