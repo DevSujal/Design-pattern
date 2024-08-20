@@ -50,7 +50,6 @@ class TicTacToe implements Game {
 }
 
  class Test {
-
     public static void main(String[] args) {
         Game chess1 = new Chess("chess", "black and white", 64);
         Chess chess2 = (Chess)chess1.getClone();
