@@ -14,6 +14,12 @@ public class Employee {
         this.pos = pos;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+
+        return pos;
+    }
 }
 
 class Organization {
@@ -23,39 +29,66 @@ class Organization {
 
     public Employee createEmployees() {
         Employee root = new Employee(id++, "vansh", 1000, "ceo");
-        root.left = new Employee(id++,"sujal", 999, "sales manager");
+        root.left = new Employee(id++, "sujal", 999, "sales manager");
         root.right = new Employee(id++, "shivansh", 999, "marketing manager");
         head = root;
-        root.left.left = new Employee(id, "prasad", 99, "sales person1");
-        root.left.right = new Employee(id, "akshat", 99, "sales person2");
-        
-        root.right.left = new Employee(id, "rishi", 99, "marketing person1");
-        root.right.right = new Employee(id, "vidit", 99, "marketing person2");
+        root.left.left = new Employee(id++, "prasad", 99, "sales person1");
+        root.left.right = new Employee(id++, "akshat", 99, "sales person2");
+
+        root.right.left = new Employee(id++, "rishi", 99, "marketing person1");
+        root.right.right = new Employee(id++, "vidit", 99, "marketing person2");
 
         return head;
     }
 
+    public int findLevel(Employee root, int key, int level) {
+        if (root == null) {
+            return -1;
+        }
+
+        if (root.id == key) {
+            return level;
+        }
+
+        return Math.max(findLevel(root.left, key, level + 1), findLevel(root.right, key, level + 1));
+
+    }
+
     public void levelOrder(Employee root) {
         Queue<Employee> q = new LinkedList<>();
-        q.add(root);
         q.add(null);
+        q.add(root);
+        boolean isNullCame = false;
         while (!q.isEmpty()) {
             Employee curr = q.poll();
-            if(curr == null) {
-                if(q.isEmpty()) {
+            if (curr == null) {
+                if (q.isEmpty()) {
                     return;
                 }
                 q.add(null);
                 System.out.println();
+                isNullCame = true;
                 continue;
             }
 
-            System.out.print(curr.name + " ");
+            int level = findLevel(root, curr.id, 0);
+            if (isNullCame) {
 
-            if(curr.left != null) {
+                for (int i = 0; i < 2 - level; i++) {
+                    System.out.print(" ");
+                }
+                isNullCame = false;
+            }
+
+            System.out.print(curr);
+            for (int i = 0; i < 3 - level; i++) {
+                System.out.print(" ");
+            }
+
+            if (curr.left != null) {
                 q.add(curr.left);
             }
-            if(curr.right != null) {
+            if (curr.right != null) {
                 q.add(curr.right);
             }
         }
@@ -63,7 +96,8 @@ class Organization {
 
     public int sumSal(Employee root) {
 
-        if(root == null) return 0;
+        if (root == null)
+            return 0;
         return root.sal + sumSal(root.left) + sumSal(root.right);
     }
 }
@@ -75,6 +109,7 @@ class Test {
         Employee root = o.createEmployees();
         o.levelOrder(root);
         System.out.println();
+        System.out.println("sum for : " + root.left.pos);
         System.out.println(o.sumSal(root.left));
     }
 }
