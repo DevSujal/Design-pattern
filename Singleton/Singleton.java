@@ -7,13 +7,18 @@ public final class Singleton {
 
     }
     // eager instantiation
-    private static Singleton singleton = new Singleton();
+    private static Singleton singleton;
 
     public static Singleton getInstance() {
+        synchronized(Singleton.class) {
+        if(singleton == null) {
+                singleton = new Singleton();
+            }
+        }
         return singleton;
     }
 
-    public void setData (int data) {
+    public void setData(int data) {
         this.data = data;
     }
     public int getData () {

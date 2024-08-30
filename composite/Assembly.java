@@ -8,40 +8,42 @@ interface Component {
 
 class Assembly implements Component {
     ArrayList<Component> al = new ArrayList<>();
-    String type;
-    Assembly() {
-        this.type = "assembly";
-    }
 
     public void addComponent(Component obj) {
         al.add(obj);
     }
     @Override
     public String toString() {
-        return type;
+        return "Assembly";
     }
 
-    public int sumCost(Component a) {
-        int sum = 0;
-        for (Component component : ((Assembly)a).al) {
-                sum += (part)component.cost + sumCost(component);
+    public static int sumCost(Component a) {
+
+        if (a instanceof Part) {
+            return ((Part) a).cost;
         }
 
+        int sum = 0;
+        for (Component component : ((Assembly)a).al) {
+                if(component instanceof Assembly) {
+                    sum += sumCost(component);
+                } else {
+                    sum += ((Part) component).cost;
+                }
+        }
         return sum;
     }
 }
 
 class Part implements Component {
     int cost;
-    String type;
     Part(int cost) {
         this.cost = cost;
-        this.type = "part";
     }
 
     @Override
     public String toString() {
-        return type;
+        return "Part";
     }
 }
 
@@ -55,6 +57,6 @@ class Test {
 
         b.addComponent(new Part(9));
         b.addComponent(new Part(19));
-
+        System.out.println(Assembly.sumCost(a));
     }
 }

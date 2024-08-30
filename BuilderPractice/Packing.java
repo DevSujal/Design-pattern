@@ -96,7 +96,7 @@ class Meal {
         return sum;
     }
 
-    void shoItems() {
+    void showItems() {
         for (Items i : items) {
             System.out.println(i);
         }
@@ -132,6 +132,6 @@ class Test {
         MealBuilder mb = new MealBuilder();
 
         Meal m = mb.prepareVegMeal();
-        m.shoItems();
+        m.showItems();
     }
 }
