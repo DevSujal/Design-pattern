@@ -44,8 +44,5 @@ class Test {
 
         Phone p = bp.setOs("windows").setRam(8).setScreenSize(40).getGadget();
         System.out.println(p);
-        int max[] = {1, 2, 3, 4, 5};
-
-
     }
 }
